@@ -8,6 +8,7 @@ import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
 import 'package:tasty_choise_provider/future/auth/presentation/pages/forget_password_screen.dart';
 import 'package:tasty_choise_provider/future/auth/presentation/pages/register_screen.dart';
+import 'package:tasty_choise_provider/future/home/presentation/pages/main_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -83,7 +84,9 @@ class LoginScreen extends StatelessWidget {
               fontSize: 16,
               borderRaduis: 30,
               fontWeight: FontWeight.bold,
-              onPressed: () {},
+              onPressed: () {
+                AppHelpers.navigationToPageAndExitAll(context, MainScreen());
+              },
             ),
             SizedBox(height: 16.h),
             RichText(
@@ -100,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                     text: 'إنشاء حساب',
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => AppHelpers.navigationToPage(
-                          context, RegisterScreen()),
+                          context, const RegisterScreen()),
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: AppColors.BLACK,

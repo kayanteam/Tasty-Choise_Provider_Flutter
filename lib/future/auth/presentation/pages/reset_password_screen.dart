@@ -6,7 +6,7 @@ import 'package:tasty_choise_provider/core/components/my_text.dart';
 import 'package:tasty_choise_provider/core/components/my_text_field.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
-import 'package:tasty_choise_provider/future/auth/presentation/pages/verification_account_screen.dart';
+import 'package:tasty_choise_provider/future/auth/presentation/pages/login_screen.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key});
@@ -90,7 +90,7 @@ class ResetPasswordScreen extends StatelessWidget {
             borderRaduis: 30,
             fontWeight: FontWeight.bold,
             onPressed: () {
-              AppHelpers.navigationToPage(context, VerificationAccountScreen());
+              AppHelpers.navigationToPage(context, LoginScreen());
             },
           ),
         ],

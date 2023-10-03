@@ -147,10 +147,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
     return Row(
       children: [
         SizedBox(width: 5.w),
-        SvgPicture.asset(
-          'assets/images/arrow-down.svg',
-          width: 12.r,
-        ),
+        Icon(Icons.arrow_drop_down_outlined),
       ],
     );
   }

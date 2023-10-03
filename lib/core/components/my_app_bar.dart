@@ -9,7 +9,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? leadingWidth;
   final Color textColor;
   final Color backgroundColor;
-  final double? elevation;
+  final double elevation;
+  final double fontSize;
+  final FontWeight fontWeight;
 
   const MyAppBar({
     Key? key,
@@ -19,23 +21,25 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.leadingWidth,
     this.textColor = AppColors.BLACK,
     this.backgroundColor = AppColors.WHITE,
-    this.elevation,
+    this.elevation = 0,
+    this.fontSize = 16,
+    this.fontWeight = FontWeight.w500,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: backgroundColor,
-      elevation: elevation ?? (title == '' ? 0 : 1),
+      elevation: elevation,
       leading: leading,
       iconTheme: IconThemeData(color: textColor),
       centerTitle: true,
       leadingWidth: leadingWidth,
       title: MyText(
         title: title,
-        fontSize: 14,
+        fontSize: fontSize,
         color: textColor,
-        fontWeight: FontWeight.w400,
+        fontWeight: fontWeight,
       ),
       actions: actions,
     );

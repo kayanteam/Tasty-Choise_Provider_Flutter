@@ -8,6 +8,9 @@ import 'package:provider/single_child_widget.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/future/home/domin/home_repo.dart';
 import 'package:tasty_choise_provider/future/home/presentation/manager/home_cubit/home_cubit.dart';
+import 'package:tasty_choise_provider/future/home/presentation/manager/main_cubit/main_cubit.dart';
+import 'package:tasty_choise_provider/future/home/presentation/manager/order_cubit/order_cubit.dart';
+import 'package:tasty_choise_provider/future/home/presentation/manager/profile/profile_cubit.dart';
 import 'package:tasty_choise_provider/locator.dart';
 
 class AppConfig {
@@ -35,6 +38,9 @@ class AppConfig {
   }
 
   static List<SingleChildWidget> providers = [
+    BlocProvider(create: (_) => MainCubit()),
+    BlocProvider(create: (_) => OrderCubit()),
+    BlocProvider(create: (_) => ProfileCubit()),
     BlocProvider(create: (_) => HomeCubit(locator<HomeRepo>())),
   ];
 }

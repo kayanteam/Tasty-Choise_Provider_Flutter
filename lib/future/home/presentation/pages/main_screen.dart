@@ -1,12 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tasty_choise_provider/core/components/loading_widget.dart';
-import 'package:tasty_choise_provider/core/components/my_app_bar.dart';
-import 'package:tasty_choise_provider/core/components/my_text.dart';
 import 'package:tasty_choise_provider/core/services/notification_service.dart';
-import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
 import 'package:tasty_choise_provider/future/home/presentation/manager/home_cubit/home_cubit.dart';
+import 'package:tasty_choise_provider/future/home/presentation/widget/my_body.dart';
+import 'package:tasty_choise_provider/future/home/presentation/widget/my_bottom_nav_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -42,33 +39,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const MyAppBar(
-        title: 'Tamplate Project',
-      ),
-      body: BlocConsumer<HomeCubit, HomeState>(
-        listener: (context, state) {
-          if (state is FailureData) {
-            AppHelpers.showSnackBar(context,
-                message: state.message, error: true);
-          }
-        },
-        builder: (context, state) {
-          if (state is LoadingData) {
-            return const LoadingWidget();
-          }
-          if (state is FailureData) {
-            return Center(
-              child: MyText(title: state.message),
-            );
-          }
-          return SingleChildScrollView(
-            child: HomeCubit.get(context).trems != null
-                ? MyText(title: HomeCubit.get(context).trems!.data ?? "")
-                : null,
-          );
-        },
-      ),
+    return const Scaffold(
+      body: MyBody(),
+      bottomNavigationBar: MyBottomNavBar(),
     );
   }
 }

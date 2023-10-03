@@ -11,13 +11,14 @@ class AppColors {
   static const Color WHITE2 = Color(0xffFAFAFA);
   static const Color WHITE3 = Color(0xffF3F3F3);
   static const Color WHITE4 = Color(0xffF5F5F5);
+  static const Color WHITE5 = Color(0xffF8F8F8);
 
   static const Color TRANSPARENT = Color.fromARGB(0, 250, 250, 250);
 
   static const Color BG_SCAFOLLD = Color(0xffffffff);
 
-  static const Color RED = Color(0xffE63E3A);
-  static const Color NAVY_BLUE = Color(0xff0473C0);
+  static const Color RED = Color(0xffDF131C);
+  static const Color BLUE = Color(0xff188FFE);
   static const Color GREEN = Color(0xff4CAF50);
   static const Color YELLOW = Color(0xffFFCA3C);
   static const Color ORANGE = Color(0xffF3AD39);

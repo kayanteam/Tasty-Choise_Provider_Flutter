@@ -58,5 +58,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>صلاحية الوصول للكاميرا لأخذ صورة شخصية</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access Microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>صلاحية الوصول لمعرض الصور لتغيير الصورة الشخصيةالخاصة</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 </dict>
 </plist>
