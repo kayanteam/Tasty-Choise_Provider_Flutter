@@ -65,23 +65,31 @@ class PickMediaWidget extends StatelessWidget {
                         height: 80.r,
                         borderRadius: 4,
                         width: 80.r,
-                        child: Image.file(
-                          File(media[index].file.extension == 'mp4'
-                              ? media[index].thum!
-                              : media[index].file.path!),
-                          height: 80.r,
-                          width: 80.r,
-                          fit: BoxFit.cover,
-                        ),
+                        child: media[index].imageNetwork == null
+                            ? Image.file(
+                                File(media[index].file!.extension == 'mp4'
+                                    ? media[index].thum!
+                                    : media[index].file!.path!),
+                                height: 80.r,
+                                width: 80.r,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                media[index].imageNetwork!,
+                                height: 80.r,
+                                width: 80.r,
+                                fit: BoxFit.cover,
+                              ),
                       ),
-                      Center(
-                        child: Icon(
-                          media[index].file.extension == 'mp4'
-                              ? Icons.video_collection_outlined
-                              : Icons.camera_alt_outlined,
-                          color: AppColors.BLACK.withOpacity(.2),
+                      if (media[index].file != null)
+                        Center(
+                          child: Icon(
+                            media[index].file!.extension == 'mp4'
+                                ? Icons.video_collection_outlined
+                                : Icons.camera_alt_outlined,
+                            color: AppColors.BLACK.withOpacity(.2),
+                          ),
                         ),
-                      ),
                       PositionedDirectional(
                         top: 0,
                         end: 0,

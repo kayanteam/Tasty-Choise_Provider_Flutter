@@ -6,9 +6,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/src/bloc_provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
+import 'package:tasty_choise_provider/future/auth/domin/auth_repo.dart';
+import 'package:tasty_choise_provider/future/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:tasty_choise_provider/future/home/domin/home_repo.dart';
+import 'package:tasty_choise_provider/future/home/domin/notification_repo.dart';
+import 'package:tasty_choise_provider/future/home/domin/order_repo.dart';
+import 'package:tasty_choise_provider/future/home/domin/profile_repo.dart';
 import 'package:tasty_choise_provider/future/home/presentation/manager/home_cubit/home_cubit.dart';
 import 'package:tasty_choise_provider/future/home/presentation/manager/main_cubit/main_cubit.dart';
+import 'package:tasty_choise_provider/future/home/presentation/manager/notification_cubit/notification_cubit.dart';
 import 'package:tasty_choise_provider/future/home/presentation/manager/order_cubit/order_cubit.dart';
 import 'package:tasty_choise_provider/future/home/presentation/manager/profile/profile_cubit.dart';
 import 'package:tasty_choise_provider/locator.dart';
@@ -38,9 +44,11 @@ class AppConfig {
   }
 
   static List<SingleChildWidget> providers = [
+    BlocProvider(create: (context) => AuthCubit(locator<AuthRepo>())),
     BlocProvider(create: (_) => MainCubit()),
-    BlocProvider(create: (_) => OrderCubit()),
-    BlocProvider(create: (_) => ProfileCubit()),
+    BlocProvider(create: (_) => OrderCubit(locator<OrderRepo>())),
+    BlocProvider(create: (_) => ProfileCubit(locator<ProfileRepo>())),
     BlocProvider(create: (_) => HomeCubit(locator<HomeRepo>())),
+    BlocProvider(create: (_) => NotificationCubit(locator<NotificationRepo>())),
   ];
 }

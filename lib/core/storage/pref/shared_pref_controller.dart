@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasty_choise_provider/core/storage/pref/pref_keys.dart';
+import 'package:tasty_choise_provider/future/auth/models/user_model.dart';
 
 class SharedPrefController {
   static final SharedPrefController _instance =
@@ -21,38 +22,33 @@ class SharedPrefController {
 
   String? get getToken => _preferences.getString(PrefKeys.TOKEN);
 
-  Future<bool> saveDataUser(User user) async {
+  Future<bool> saveDataUser(UserModel user) async {
     await _preferences.setInt(PrefKeys.ID_USER, user.id ?? -1);
     await _preferences.setString(PrefKeys.NAME_USER, user.name ?? "");
     await _preferences.setString(PrefKeys.PHONE_USER, user.phone ?? "");
     await _preferences.setString(PrefKeys.TOKEN, user.token ?? "");
-    await _preferences.setString(PrefKeys.STATUS_USER, user.status ?? "");
-    await _preferences.setString(PrefKeys.GENDER_USER, user.gender ?? "");
-    await _preferences.setString(PrefKeys.IMAGE_USER, user.image ?? "");
-
-    return await _preferences.setString(
-        PrefKeys.BIRTH_DATE_USER, user.birthDate ?? "");
+    await _preferences.setString(PrefKeys.EMAIL, user.email ?? "");
+    await _preferences.setString(PrefKeys.MANAGER_NAME, user.mangerName ?? "");
+    return await _preferences.setString(PrefKeys.IMAGE_USER, user.image ?? "");
   }
 
-  User getDataUser() {
+  UserModel getDataUser() {
     int id = _preferences.getInt(PrefKeys.ID_USER) ?? -1;
     String name = _preferences.getString(PrefKeys.NAME_USER) ?? "";
     String phone = _preferences.getString(PrefKeys.PHONE_USER) ?? "";
     String token = _preferences.getString(PrefKeys.TOKEN) ?? "";
-    String status = _preferences.getString(PrefKeys.STATUS_USER) ?? "";
-    String gender = _preferences.getString(PrefKeys.GENDER_USER) ?? "";
-    String birthDate = _preferences.getString(PrefKeys.BIRTH_DATE_USER) ?? "";
+    String managerName = _preferences.getString(PrefKeys.MANAGER_NAME) ?? "";
     String image = _preferences.getString(PrefKeys.IMAGE_USER) ?? "";
+    String email = _preferences.getString(PrefKeys.EMAIL) ?? "";
 
-    return User(
+    return UserModel(
       id: id,
       name: name,
       phone: phone,
-      birthDate: birthDate,
       token: token,
-      status: status,
-      gender: gender,
+      mangerName: managerName,
       image: image,
+      email: email,
     );
   }
 
@@ -64,28 +60,4 @@ class SharedPrefController {
   Future clearAllData() async {
     await _preferences.clear();
   }
-}
-
-// ! Fack class
-
-class User {
-  int? id;
-  String? name;
-  String? phone;
-  String? birthDate;
-  String? token;
-  String? status;
-  String? gender;
-  String? image;
-
-  User({
-    required this.birthDate,
-    required this.gender,
-    required this.id,
-    required this.image,
-    required this.name,
-    required this.phone,
-    required this.status,
-    required this.token,
-  });
 }

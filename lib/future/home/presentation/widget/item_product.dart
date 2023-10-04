@@ -4,10 +4,12 @@ import 'package:tasty_choise_provider/core/components/my_contianer_shape.dart';
 import 'package:tasty_choise_provider/core/components/my_text.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
+import 'package:tasty_choise_provider/future/home/models/order/order.dart';
 import 'package:tasty_choise_provider/future/home/presentation/pages/nav/order/order_details_screen.dart';
 
 class ItemProduct extends StatelessWidget {
-  const ItemProduct({super.key});
+  final OrderModel order;
+  const ItemProduct({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,8 @@ class ItemProduct extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            AppHelpers.navigationToPage(context, const OrderDetailsScreen());
+            AppHelpers.navigationToPage(
+                context, OrderDetailsScreen(order: order));
           },
           child: MyContainerShape(
             borderRadius: 12,
@@ -25,7 +28,17 @@ class ItemProduct extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset('assets/images/klipartz.png', width: 80.w),
+                Image.network(
+                  order.product!.image ?? "",
+                  width: 80.w,
+                  errorBuilder: (context, error, stackTrace) {
+                    return SizedBox(
+                      width: 80.r,
+                      height: 80.r,
+                      child: Center(child: Icon(Icons.error)),
+                    );
+                  },
+                ),
                 SizedBox(width: 22.w),
                 Expanded(
                   child: Column(
@@ -35,12 +48,12 @@ class ItemProduct extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           MyText(
-                            title: '120.00ر.س',
+                            title: '${order.product!.price} ر.س',
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
                           MyText(
-                            title: 'الاثنين ، 16 فبراير',
+                            title: order.createdAt ?? "",
                             fontSize: 10,
                             color: AppColors.GRAY,
                             fontWeight: FontWeight.w500,
@@ -52,12 +65,12 @@ class ItemProduct extends StatelessWidget {
                         children: [
                           Expanded(
                             child: MyText(
-                              title: 'برجر الحراق المكسيكي',
+                              title: order.product!.name ?? "",
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          MyText(title: 'X 2'),
+                          MyText(title: 'X ${order.product!.count}'),
                         ],
                       ),
                       SizedBox(height: 12.h),
@@ -65,28 +78,16 @@ class ItemProduct extends StatelessWidget {
                       SizedBox(height: 12.h),
                       Row(
                         children: [
-                          MyContainerShape(
-                            height: 20.r,
-                            width: 20.r,
-                            borderRadius: 20,
-                            bgContainer: AppColors.BASE_COLOR,
-                            child: MyText(
-                              title: 'D',
-                              height: 0,
-                              fontSize: 12,
-                            ),
-                          ),
-                          SizedBox(width: 2.w),
                           Expanded(
                             child: MyText(
-                              title: 'فهد بن طلال',
+                              title: order.user!.name ?? "",
                               fontSize: 10,
                               color: AppColors.GRAY3,
                               fontWeight: FontWeight.w300,
                             ),
                           ),
                           MyText(
-                            title: '3156416#',
+                            title: '${order.id}#',
                             fontSize: 10,
                             color: AppColors.GRAY3,
                             fontWeight: FontWeight.w300,

@@ -14,7 +14,7 @@ class MyBottomNavBar extends StatelessWidget {
     return MyContainerShape(
       topEndRaduis: 32,
       topStartRaduis: 32,
-      height: 80.r,
+      height: 90.r,
       enableShadow: true,
       blur: 50,
       shadow: AppColors.BLACK.withOpacity(.1),
@@ -68,7 +68,7 @@ class MyBottomNavBar extends StatelessWidget {
               );
             },
           ),
-          SizedBox(height: MediaQuery.of(context).padding.bottom),
+          SizedBox(height: 20.h),
         ],
       ),
     );

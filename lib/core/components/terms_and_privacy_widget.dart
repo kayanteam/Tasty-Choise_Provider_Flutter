@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:tasty_choise_provider/core/components/my_contianer_shape.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
+import 'package:tasty_choise_provider/future/auth/presentation/manager/auth_cubit/auth_cubit.dart';
+import 'package:tasty_choise_provider/future/home/presentation/pages/nav/profile/privacy_policy_screen.dart';
 
 class TermsAndPrivacyPolicyWidget extends StatefulWidget {
   const TermsAndPrivacyPolicyWidget({
@@ -52,6 +54,7 @@ class _TermsAndPrivacyPolicyWidgetState
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => setState(() {
                           enabled = !enabled;
+                          AuthCubit.get(context).changeAgree(enabled);
                         }),
                   text: '${AppLocalizations.of(context)!.iAgreeToAll} ',
                   style: TextStyle(
@@ -65,7 +68,7 @@ class _TermsAndPrivacyPolicyWidgetState
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => AppHelpers.navigationToPage(
                           context,
-                          const Scaffold(),
+                          const PrivacyPolicyScreen(),
                         ),
                   text: AppLocalizations.of(context)!.theTermsAndPrivacyPolicy,
                   style: TextStyle(

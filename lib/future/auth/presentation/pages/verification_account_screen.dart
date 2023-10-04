@@ -1,3 +1,4 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,10 +8,15 @@ import 'package:tasty_choise_provider/core/components/my_pin_put.dart';
 import 'package:tasty_choise_provider/core/components/my_text.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
+import 'package:tasty_choise_provider/future/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:tasty_choise_provider/future/auth/presentation/pages/reset_password_screen.dart';
+import 'package:tasty_choise_provider/future/home/presentation/pages/main_screen.dart';
 
 class VerificationAccountScreen extends StatefulWidget {
-  const VerificationAccountScreen({super.key});
+  final String email;
+  final bool byForgetPasswordScreen;
+  const VerificationAccountScreen(
+      {required this.email, required this.byForgetPasswordScreen, super.key});
 
   @override
   State<VerificationAccountScreen> createState() =>
@@ -19,6 +25,7 @@ class VerificationAccountScreen extends StatefulWidget {
 
 class _VerificationAccountScreenState extends State<VerificationAccountScreen> {
   late final StopWatchTimer _stopWatchTimer;
+  final TextEditingController _codeController = TextEditingController();
   @override
   void initState() {
     _stopWatchTimer = StopWatchTimer(mode: StopWatchMode.countDown);
@@ -62,7 +69,7 @@ class _VerificationAccountScreenState extends State<VerificationAccountScreen> {
           ),
           Align(
             child: MyText(
-              title: 'mhammedkhaled96@gmail.com',
+              title: widget.email,
               fontSize: 14,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w300,
@@ -70,15 +77,46 @@ class _VerificationAccountScreenState extends State<VerificationAccountScreen> {
             ),
           ),
           SizedBox(height: 32.h),
-          MyPinput(),
+          MyPinput(
+            textEditingController: _codeController,
+          ),
           SizedBox(height: 43.h),
-          MyElevatedButton(
-            title: 'تاكيد الكود',
-            fontSize: 16,
-            borderRaduis: 30,
-            fontWeight: FontWeight.bold,
-            onPressed: () {
-              AppHelpers.navigationToPage(context, ResetPasswordScreen());
+          BlocConsumer<AuthCubit, AuthState>(
+            listener: (context, state) {
+              if (state is AuthVerifySuccess) {
+                AppHelpers.showSnackBar(context, message: state.message);
+                if (widget.byForgetPasswordScreen) {
+                  AppHelpers.navigationToPage(
+                      context, ResetPasswordScreen(input: widget.email));
+                } else {
+                  AppHelpers.navigationToPageAndExitAll(
+                      context, const MainScreen());
+                }
+              }
+              if (state is AuthVerifyFailuer) {
+                AppHelpers.showSnackBar(context,
+                    message: state.message, error: true);
+              }
+            },
+            builder: (context, state) {
+              if (state is AuthVerifyLoading) {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              }
+              return MyElevatedButton(
+                title: 'تاكيد الكود',
+                fontSize: 16,
+                borderRaduis: 30,
+                fontWeight: FontWeight.bold,
+                onPressed: () {
+                  AuthCubit.get(context).verifyCode(
+                    widget.email,
+                    _codeController.text,
+                    saveData: !widget.byForgetPasswordScreen,
+                  );
+                },
+              );
             },
           ),
           SizedBox(height: 20.h),

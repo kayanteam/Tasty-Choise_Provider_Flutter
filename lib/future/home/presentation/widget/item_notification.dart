@@ -4,16 +4,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tasty_choise_provider/core/components/my_contianer_shape.dart';
 import 'package:tasty_choise_provider/core/components/my_text.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
+import 'package:tasty_choise_provider/future/home/models/notification/notification_model.dart';
 
 class ItemNotification extends StatelessWidget {
-  // final NotificationModel notification;
+  final NotificationModel notification;
   const ItemNotification({
     super.key,
+    required this.notification,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MyContainerShape(
           paddingHorizontal: 12,
@@ -21,6 +24,7 @@ class ItemNotification extends StatelessWidget {
           borderRadius: 10,
           bgContainer: AppColors.WHITE2,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -40,11 +44,11 @@ class ItemNotification extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       MyText(
-                        title: "طلب مكتمل",
+                        title: notification.title ?? "",
                         color: AppColors.GRAY3,
                       ),
                       MyText(
-                        title: "اليوم 19:10",
+                        title: notification.createdAt ?? "",
                         fontSize: 10,
                         color: AppColors.ICON_COLOR,
                       ),
@@ -54,11 +58,11 @@ class ItemNotification extends StatelessWidget {
               ),
               SizedBox(height: 12.h),
               MyText(
-                title:
-                    "تهانينا ، تم تسليم الطلب بنجاح من مطعم البجار للماكولات البحرية ",
+                title: notification.message ?? "",
                 fontSize: 12,
                 fontWeight: FontWeight.w300,
                 color: AppColors.GRAY3,
+                textAlign: TextAlign.start,
               )
             ],
           ),

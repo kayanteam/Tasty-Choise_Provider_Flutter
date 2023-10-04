@@ -2,7 +2,7 @@ class GeneralResponse<T> {
   bool? status;
   int? code;
   String? message;
-  T? data;
+  dynamic data;
 
   GeneralResponse({this.status, this.code, this.message, this.data});
 

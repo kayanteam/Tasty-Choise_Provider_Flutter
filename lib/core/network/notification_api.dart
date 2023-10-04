@@ -1,18 +1,22 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:tasty_choise_provider/core/network/end_points.dart';
+import 'package:tasty_choise_provider/core/network/home_api.dart';
 import 'package:tasty_choise_provider/core/services/dio_service.dart';
+import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
 import 'package:tasty_choise_provider/future/home/models/general_response.dart';
 
-typedef EitherType<T> = Future<Either<String, T>>;
-
-class Api {
+class NotificationApi {
   final DioService dio;
 
-  Api({required this.dio});
+  NotificationApi({required this.dio});
 
-  EitherType<GeneralResponse<String>> termsOfUse() async {
+  EitherType<GeneralResponse> getNotification() async {
     try {
-      final response = await dio.dio.get(EndPoints.TERMS_OF_USE);
+      final response = await dio.dio.get(
+        EndPoints.NOTIFICATIONS,
+        options: Options(headers: AppHelpers.getHeader()),
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         return right(GeneralResponse.fromJson(response.data));
       } else {

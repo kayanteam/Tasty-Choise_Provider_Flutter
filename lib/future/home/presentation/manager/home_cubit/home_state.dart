@@ -7,20 +7,42 @@ class HomeInitial extends HomeState {}
 
 class LoadingData extends HomeState {}
 
-class SuccessData extends HomeState {
-  final String data;
-  SuccessData(this.data);
-}
+class SuccessData extends HomeState {}
 
-class FailureData extends HomeState implements Equatable {
+class FailureData extends HomeState {
   final String message;
   FailureData(this.message);
+}
 
-  @override
-  // TODO: implement props
-  List<Object?> get props => [message];
+class HomeLoadingData extends HomeState {}
 
-  @override
-  // TODO: implement stringify
-  bool? get stringify => false;
+class HomeSuccessData extends HomeState {}
+
+class HomeFailureData extends HomeState {
+  final String message;
+  HomeFailureData(this.message);
+}
+
+class AddProductLoadingData extends HomeState {}
+
+class AddProductSuccessData extends HomeState {
+  final String message;
+  AddProductSuccessData(this.message);
+}
+
+class AddProductFailureData extends HomeState {
+  final String message;
+  AddProductFailureData(this.message);
+}
+
+class DeleteProductLoadingData extends HomeState {}
+
+class DeleteProductSuccessData extends HomeState {
+  final String message;
+  DeleteProductSuccessData(this.message);
+}
+
+class DeleteProductFailureData extends HomeState {
+  final String message;
+  DeleteProductFailureData(this.message);
 }

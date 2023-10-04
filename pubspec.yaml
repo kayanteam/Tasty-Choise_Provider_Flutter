@@ -38,7 +38,7 @@ dependencies:
   pinput: ^2.2.21
   stop_watch_timer: ^3.0.2
   video_thumbnail: ^0.5.3
-
+  pull_to_refresh: ^2.0.0
 
   # ? test
   mockito: ^5.4.2

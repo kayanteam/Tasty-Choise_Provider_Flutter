@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tasty_choise_provider/core/components/my_contianer_shape.dart';
 import 'package:tasty_choise_provider/core/components/my_text.dart';
+import 'package:tasty_choise_provider/core/storage/pref/shared_pref_controller.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
+import 'package:tasty_choise_provider/future/auth/presentation/pages/login_screen.dart';
 import 'package:tasty_choise_provider/future/home/presentation/pages/nav/profile/about_us_screen.dart';
-import 'package:tasty_choise_provider/future/home/presentation/pages/nav/profile/common_questions_screen.dart';
 import 'package:tasty_choise_provider/future/home/presentation/pages/nav/profile/privacy_policy_screen.dart';
+import 'package:tasty_choise_provider/future/home/presentation/pages/nav/profile/subscribtion_screen.dart';
 import 'package:tasty_choise_provider/future/home/presentation/pages/nav/profile/update_profile_screen.dart';
+import 'package:tasty_choise_provider/future/home/presentation/pages/nav/profile/wallet_screen.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -73,26 +76,24 @@ class Profile extends StatelessWidget {
                             ItemDrawer(
                               icon: 'assets/images/settings/ic_wallet.svg',
                               title: 'المحفظة',
-                              onTap: () {},
+                              onTap: () {
+                                AppHelpers.navigationToPage(
+                                    context, const WalletScreen());
+                              },
                             ),
                             ItemDrawer(
                               icon:
                                   'assets/images/settings/ic_subscribtion.svg',
                               title: 'باقات الاشتراك',
-                              onTap: () {},
+                              onTap: () {
+                                AppHelpers.navigationToPage(
+                                    context, const SubscirbtionScreen());
+                              },
                             ),
                             ItemDrawer(
                               icon: 'assets/images/settings/ic_settings2.svg',
                               title: 'تغير كلمة المرور',
                               onTap: () {},
-                            ),
-                            ItemDrawer(
-                              icon: 'assets/images/settings/ic_qustion.svg',
-                              title: 'الاسئلة الشائعة',
-                              onTap: () {
-                                AppHelpers.navigationToPage(
-                                    context, const CommonQuestionsScreen());
-                              },
                             ),
                             ItemDrawer(
                               icon:
@@ -119,7 +120,11 @@ class Profile extends StatelessWidget {
                             ItemDrawer(
                               icon: 'assets/images/settings/ic_logoutt.svg',
                               title: 'تسجيل خروج',
-                              onTap: () {},
+                              onTap: () async {
+                                await SharedPrefController().clearAllData();
+                                AppHelpers.navigationToPageAndExitAll(
+                                    context, LoginScreen());
+                              },
                             ),
                           ],
                         ),

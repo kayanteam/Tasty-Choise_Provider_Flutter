@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:tasty_choise_provider/core/components/my_text.dart';
 import 'package:tasty_choise_provider/core/services/navigation_service.dart';
+import 'package:tasty_choise_provider/core/storage/pref/shared_pref_controller.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/locator.dart';
 
 class AppHelpers {
   static Map<String, String> getHeader() {
-    return {
-      "Accept": "application/json",
-      // 'Authorization': 'Bearer ${shared.getToken}',
-      // 'lang': shared.getLang
-    };
+    if (SharedPrefController().getToken != null) {
+      return {
+        "Accept": "application/json",
+        'Authorization': 'Bearer ${SharedPrefController().getToken}',
+        // 'lang': SharedPrefController().getLang
+        'lang': SharedPrefController().getLang
+      };
+    } else {
+      return {
+        "Accept": "application/json",
+        'lang': SharedPrefController().getLang
+      };
+    }
   }
 
   static void navigationReplacementToPage(BuildContext context, Widget screen) {
@@ -64,6 +73,27 @@ class AppHelpers {
             : const Color.fromARGB(255, 16, 98, 16),
       ),
     );
+  }
+
+  static String? checkFillData(String? s, BuildContext context) {
+    if (s == null || s.isEmpty) {
+      return 'الرجاء املئ الحقل اعلاه';
+    }
+
+    return null;
+  }
+
+  static String? checkFillDataWithMatchPaawords(
+      String? s, String? s1, BuildContext context) {
+    if (s == null || s.isEmpty) {
+      return 'الرجاء املئ الحقل اعلاه';
+    }
+
+    if (s != s1) {
+      return 'الرجاء من تشابه كلمتا السر';
+    }
+
+    return null;
   }
 
   static Future<String?> selectDate(BuildContext context) async {

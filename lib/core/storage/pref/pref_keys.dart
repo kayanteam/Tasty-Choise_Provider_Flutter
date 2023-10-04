@@ -12,7 +12,8 @@ class PrefKeys {
   static const String ID_NUMBER_USER = 'id_number';
   static const String BIRTH_DATE_USER = 'birth_date';
   static const String IMAGE_USER = 'image';
-  static const String STATUS_USER = 'status';
+  static const String MANAGER_NAME = 'manager_name';
+  static const String EMAIL = 'email';
 
   // ! Lang
   static const String LANG = 'lang';

@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp(
-            title: 'Flutter Template',
+            title: 'Saving Station',
             theme: AppConfig.themeData(),
             debugShowCheckedModeBanner: false,
             navigatorKey: locator<NavigationService>().rootNavKey,
