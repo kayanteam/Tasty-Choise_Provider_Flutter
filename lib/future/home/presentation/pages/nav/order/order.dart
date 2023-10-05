@@ -3,11 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tasty_choise_provider/core/components/my_contianer_shape.dart';
+import 'package:tasty_choise_provider/core/components/my_elevated_button.dart';
 import 'package:tasty_choise_provider/core/components/my_text.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
+import 'package:tasty_choise_provider/future/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:tasty_choise_provider/future/home/models/order/order.dart';
 import 'package:tasty_choise_provider/future/home/presentation/manager/order_cubit/order_cubit.dart';
+import 'package:tasty_choise_provider/future/home/presentation/pages/nav/profile/subscribtion_screen.dart';
 import 'package:tasty_choise_provider/future/home/presentation/widget/item_product.dart';
 
 class Order extends StatelessWidget {
@@ -69,54 +72,78 @@ class Order extends StatelessWidget {
             ),
             SizedBox(height: 20.h),
             Expanded(
-              child: BlocConsumer<OrderCubit, OrderState>(
-                listener: (context, state) {
-                  if (state is OrdersFailure) {
-                    AppHelpers.showSnackBar(context,
-                        message: state.message, error: true);
-                  }
-                },
+              child: BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) {
-                  if (state is OrdersLoading) {
-                    return const Center(
-                        child: CircularProgressIndicator.adaptive());
-                  }
+                  return BlocConsumer<OrderCubit, OrderState>(
+                    listener: (context, state) {
+                      if (state is OrdersFailure) {
+                        AppHelpers.showSnackBar(context,
+                            message: state.message, error: true);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is OrdersLoading) {
+                        return const Center(
+                            child: CircularProgressIndicator.adaptive());
+                      }
 
-                  List<OrderModel> orders = OrderCubit.get(context).orders;
-                  return orders.length == 0
-                      ? SmartRefresher(
-                          enablePullDown: true,
-                          enablePullUp: true,
-                          controller: _refreshController,
-                          onRefresh: () async {
-                            await OrderCubit.get(context).getOrder();
-                            _refreshController.refreshCompleted();
-                          },
-                          child: ListView(
-                            children: [
-                              SizedBox(height: 200.h),
-                              MyText(
-                                textAlign: TextAlign.center,
-                                title: 'لا توجد طلبات في الوقت الحالي',
-                              ),
-                            ],
-                          ),
-                        )
-                      : SmartRefresher(
-                          enablePullDown: true,
-                          enablePullUp: true,
-                          controller: _refreshController,
-                          onRefresh: () async {
-                            await OrderCubit.get(context).getOrder();
-                            _refreshController.refreshCompleted();
-                          },
-                          child: ListView.builder(
-                            itemCount: orders.length,
-                            itemBuilder: (context, index) {
-                              return ItemProduct(order: orders[index]);
-                            },
-                          ),
-                        );
+                      List<OrderModel> orders = OrderCubit.get(context).orders;
+                      return OrderCubit.get(context).indexTap == 0 &&
+                              !AuthCubit.get(context).isSubscribe
+                          ? Column(
+                              children: [
+                                SizedBox(height: 100.h),
+                                MyText(
+                                    textAlign: TextAlign.center,
+                                    title:
+                                        'يجب عليك الاشتراك في باقة تقبل طلبات لكي تتمكن من استقبال طلبات'),
+                                SizedBox(height: 20),
+                                MyElevatedButton(
+                                  title: "اشترك الان",
+                                  onPressed: () {
+                                    AppHelpers.navigationToPage(
+                                        context, SubscirbtionScreen());
+                                  },
+                                  fontSize: 16,
+                                )
+                              ],
+                            )
+                          : orders.length == 0
+                              ? SmartRefresher(
+                                  enablePullDown: true,
+                                  enablePullUp: true,
+                                  controller: _refreshController,
+                                  onRefresh: () async {
+                                    await OrderCubit.get(context).getOrder();
+                                    _refreshController.refreshCompleted();
+                                  },
+                                  child: ListView(
+                                    children: [
+                                      SizedBox(height: 200.h),
+                                      MyText(
+                                        textAlign: TextAlign.center,
+                                        title: 'لا توجد طلبات في الوقت الحالي',
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : SmartRefresher(
+                                  enablePullDown: true,
+                                  enablePullUp: true,
+                                  controller: _refreshController,
+                                  onRefresh: () async {
+                                    await OrderCubit.get(context).getOrder();
+                                    _refreshController.refreshCompleted();
+                                  },
+                                  child: ListView.builder(
+                                    itemCount: orders.length,
+                                    itemBuilder: (context, index) {
+                                      return ItemProduct(order: orders[index]);
+                                    },
+                                  ),
+                                );
+                    },
+                  );
                 },
               ),
             ),

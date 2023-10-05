@@ -29,6 +29,8 @@ class SharedPrefController {
     await _preferences.setString(PrefKeys.TOKEN, user.token ?? "");
     await _preferences.setString(PrefKeys.EMAIL, user.email ?? "");
     await _preferences.setString(PrefKeys.MANAGER_NAME, user.mangerName ?? "");
+    await _preferences.setBool(
+        PrefKeys.IS_SUBSCRIBE, user.isSubscribed ?? false);
     return await _preferences.setString(PrefKeys.IMAGE_USER, user.image ?? "");
   }
 
@@ -40,6 +42,7 @@ class SharedPrefController {
     String managerName = _preferences.getString(PrefKeys.MANAGER_NAME) ?? "";
     String image = _preferences.getString(PrefKeys.IMAGE_USER) ?? "";
     String email = _preferences.getString(PrefKeys.EMAIL) ?? "";
+    bool? isSubs = _preferences.getBool(PrefKeys.IS_SUBSCRIBE);
 
     return UserModel(
       id: id,
@@ -49,6 +52,7 @@ class SharedPrefController {
       mangerName: managerName,
       image: image,
       email: email,
+      isSubscribed: isSubs,
     );
   }
 

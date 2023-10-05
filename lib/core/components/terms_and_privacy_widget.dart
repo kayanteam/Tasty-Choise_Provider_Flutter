@@ -30,6 +30,7 @@ class _TermsAndPrivacyPolicyWidgetState
             setState(() {
               enabled = !enabled;
             });
+            AuthCubit.get(context).changeAgree(enabled);
           },
           child: MyContainerShape(
             height: 24,

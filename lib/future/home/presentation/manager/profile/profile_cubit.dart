@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tasty_choise_provider/future/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:tasty_choise_provider/future/home/domin/profile_repo.dart';
 import 'package:tasty_choise_provider/future/home/models/profile/subscribtion_model.dart';
 import 'package:tasty_choise_provider/future/home/models/profile/wallet/transactions.dart';
@@ -94,13 +95,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
   }
 
-  Future subscribe(int id) async {
+  Future subscribe(BuildContext context, int id) async {
     emit(SubscribtionsLoading());
     (await repo.subscibe(id)).fold(
       (l) {
         emit(SubscribtionsFailed(message: l));
       },
-      (r) {
+      (r) async {
+        // await AuthCubit.get(context).loadDataUser();
+
         getSubscribtion();
         emit(SubscribtionsSuccess(message: r.message!));
       },

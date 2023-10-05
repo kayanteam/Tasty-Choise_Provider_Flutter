@@ -146,7 +146,7 @@ class _SubscirbtionScreenState extends State<SubscirbtionScreen> {
                           onPressed: subs[index].isSubscribed == 'unsubscribe'
                               ? () {
                                   ProfileCubit.get(context)
-                                      .subscribe(subs[index].id!);
+                                      .subscribe(context, subs[index].id!);
                                 }
                               : null,
                           borderRaduis: 30,

@@ -1,9 +1,13 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:tasty_choise_provider/core/storage/pref/shared_pref_controller.dart';
+import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
 import 'package:tasty_choise_provider/future/auth/domin/auth_repo.dart';
 import 'package:tasty_choise_provider/future/auth/models/user_model.dart';
 
@@ -26,9 +30,15 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   UserModel? user;
-
-  void loadDataUser() {
+  bool isSubscribe = false;
+  void loadDataUser() async {
     user = SharedPrefController().getDataUser();
+    final response = await http.get(
+        Uri.parse('https://taqiemi.loofy92.com/api/partners/profile'),
+        headers: AppHelpers.getHeader());
+
+    isSubscribe = jsonDecode(response.body)['data']['is_subscribed'];
+    emit(AuthInitial());
   }
 
   bool agreeTerms = false;

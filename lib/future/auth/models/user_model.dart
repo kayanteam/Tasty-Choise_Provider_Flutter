@@ -6,6 +6,7 @@ class UserModel {
   String? email;
   String? token;
   String? mangerName;
+  bool? isSubscribed;
 
   UserModel(
       {this.id,
@@ -14,6 +15,7 @@ class UserModel {
       this.phone,
       this.email,
       this.token,
+      this.isSubscribed,
       this.mangerName});
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class UserModel {
     email = json['email'];
     token = json['token'];
     mangerName = json['manger_name'];
+    isSubscribed = json['is_subscribed'];
   }
 
   Map<String, dynamic> toJson() {
@@ -35,6 +38,8 @@ class UserModel {
     data['email'] = email;
     data['token'] = token;
     data['manger_name'] = mangerName;
+    data['is_subscribed'] = isSubscribed;
+
     return data;
   }
 }

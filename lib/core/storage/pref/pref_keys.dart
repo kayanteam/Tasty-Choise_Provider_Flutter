@@ -14,6 +14,7 @@ class PrefKeys {
   static const String IMAGE_USER = 'image';
   static const String MANAGER_NAME = 'manager_name';
   static const String EMAIL = 'email';
+  static const String IS_SUBSCRIBE = 'is_subs';
 
   // ! Lang
   static const String LANG = 'lang';
