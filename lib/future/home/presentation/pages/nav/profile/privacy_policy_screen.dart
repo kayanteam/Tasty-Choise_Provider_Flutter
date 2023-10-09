@@ -46,7 +46,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               MyText(
                 title: (state as ProfileSuccess).data,
                 fontSize: 14,
-                color: Color(0xff606E7D),
+                color: const Color(0xff606E7D),
                 fontWeight: FontWeight.w300,
                 height: 1.7,
               ),

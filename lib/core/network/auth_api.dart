@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:tasty_choise_provider/core/network/end_points.dart';
 import 'package:tasty_choise_provider/core/services/dio_service.dart';
 import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
@@ -20,6 +21,7 @@ class AuthApi {
       final data = {
         "email": email,
         "password": password,
+        "fcm_token": (await FirebaseMessaging.instance.getToken()) ?? ""
       };
       final response = await dio.dio.post(
         EndPoints.LOGIN,
@@ -50,6 +52,7 @@ class AuthApi {
         "name": name,
         "manager_name": admin,
         "category_id": categoryId,
+        "fcm_token": (await FirebaseMessaging.instance.getToken()) ?? ""
       };
       final response = await dio.dio.post(
         EndPoints.REGISTR,
