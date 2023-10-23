@@ -10,9 +10,9 @@ import 'package:tasty_choise_provider/core/components/my_text_field.dart';
 import 'package:tasty_choise_provider/core/components/pick_media_product_widget.dart';
 import 'package:tasty_choise_provider/core/utils/app_colors.dart';
 import 'package:tasty_choise_provider/core/utils/app_helpers.dart';
-import 'package:tasty_choise_provider/future/home/models/categories.dart';
 import 'package:tasty_choise_provider/future/home/models/my_media.dart';
 import 'package:tasty_choise_provider/future/home/models/product.dart';
+import 'package:tasty_choise_provider/future/home/models/product_types.dart';
 import 'package:tasty_choise_provider/future/home/presentation/manager/home_cubit/home_cubit.dart';
 
 class AddProductScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
-  int categoryId = -1;
+  int productTypeId = -1;
 
   TextEditingController _nameController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
@@ -33,9 +33,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   void initState() {
-    List<Categories>? categories =
-        HomeCubit.get(context).appConfig!.categories!;
-    categoryId = categories.length > 0 ? categories[0].id! : -1;
+    List<Producttypes>? productTypes =
+        HomeCubit.get(context).appConfig!.producttypes!;
+    productTypeId = productTypes[0].id!;
     if (widget.product != null) {
       HomeCubit.get(context).media.add(
             MyMedia(file: null, imageNetwork: widget.product!.image),
@@ -126,7 +126,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     alignment: AlignmentDirectional.centerStart,
                     listItems: HomeCubit.get(context)
                         .appConfig!
-                        .categories!
+                        .producttypes!
                         .map((e) => e.name!)
                         .toList(),
                     borderRadius: 8,
@@ -135,11 +135,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                     onChanged: (String? s) {
                       int index = HomeCubit.get(context)
                           .appConfig!
-                          .categories!
+                          .producttypes!
                           .indexWhere((element) => element.name == s);
-                      categoryId = HomeCubit.get(context)
+                      productTypeId = HomeCubit.get(context)
                           .appConfig!
-                          .categories![index]
+                          .producttypes![index]
                           .id!;
                     },
                   ),
@@ -219,7 +219,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         name: _nameController.text.trim(),
                         description: _descController.text.trim(),
                         price: _priceController.text.trim(),
-                        categoryId: categoryId.toString(),
+                        productTypeId: productTypeId.toString(),
                       );
                     }
                   },

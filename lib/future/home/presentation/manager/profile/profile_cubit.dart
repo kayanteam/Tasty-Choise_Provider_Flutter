@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tasty_choise_provider/future/auth/presentation/manager/auth_cubit/auth_cubit.dart';
 import 'package:tasty_choise_provider/future/home/domin/profile_repo.dart';
 import 'package:tasty_choise_provider/future/home/models/profile/subscribtion_model.dart';
 import 'package:tasty_choise_provider/future/home/models/profile/wallet/transactions.dart';

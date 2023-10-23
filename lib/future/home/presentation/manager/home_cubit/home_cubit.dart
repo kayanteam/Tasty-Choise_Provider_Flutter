@@ -90,7 +90,7 @@ class HomeCubit extends Cubit<HomeState> {
     required String name,
     required String description,
     required String price,
-    required String categoryId,
+    required String productTypeId,
     required int? productId,
   }) async {
     emit(AddProductLoadingData());
@@ -99,7 +99,7 @@ class HomeCubit extends Cubit<HomeState> {
       name: name,
       price: price,
       description: description,
-      productTypeId: categoryId,
+      productTypeId: productTypeId,
       productId: productId,
     ))
         .fold(
