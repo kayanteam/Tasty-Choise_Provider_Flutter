@@ -57,7 +57,7 @@ class HomeApi {
       'product_type_id': productTypeId,
       'description': description,
       if (productId != null) 'product_id': productId,
-      if (image != null) 'image': await MultipartFile.fromFile(image!),
+      if (image != null) 'image': await MultipartFile.fromFile(image),
     });
 
     try {
